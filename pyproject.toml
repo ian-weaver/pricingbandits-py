@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pricingbandits"
+version = "2.0.0"
+description = "Multi-armed bandit approaches to pricing experiments with an unknown demand curve (UCB, TS, GP, monotonic and soft-monotonic GP variants)"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [
+  { name = "Ian N. Weaver", email = "i.weaver@nus.edu.sg" },
+  { name = "Vineet Kumar" },
+  { name = "Lalit Jain" },
+]
+dependencies = ["numpy>=1.24", "scipy>=1.11"]
+
+[project.optional-dependencies]
+test = ["pytest>=7"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
