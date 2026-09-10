@@ -74,8 +74,16 @@ from scipy.stats import beta as beta_dist
 expected_revenue = prices * (1 - beta_dist.cdf(prices, 2, 9))
 grid = np.arange(1, 1_000_001) / 1_000_000
 optimal = np.max(grid * (1 - beta_dist.cdf(grid, 2, 9)))  # best any price could do
-earned = expected_revenue[np.searchsorted(prices, out.prices_tested)]
-pct_of_optimal = np.cumsum(earned) / (np.arange(1, len(earned) + 1) * optimal) * 100
+
+def score(out):
+    earned = expected_revenue[np.searchsorted(prices, out.prices_tested)]
+    return np.cumsum(earned) / (np.arange(1, len(earned) + 1) * optimal) * 100
+
+curves = {}
+for policy in ["UCB", "TS", "GP-UCB", "GP-TS", "GP-UCB-M", "GP-TS-M"]:
+    out = pb.pricing_bandit(valuations, prices, policy=policy, batch_size=10,
+                            rng=np.random.default_rng(1))
+    curves[policy] = score(out)   # one line per policy in the figure below
 ```
 
 <picture>
