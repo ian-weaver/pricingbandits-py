@@ -28,8 +28,8 @@ def test_kernels(gold):
     xi, xj = np.array(g["x_i"]), np.array(g["x_j"])
     sf, l = g["sigma_f"], g["l"]
     np.testing.assert_allclose(pb.rbf_kernel(xi, xj, sf, l), g["k00"], rtol=1e-12)
-    np.testing.assert_allclose(pb.rbf_kernel_01(xi, xj, sf, l), g["k01"], rtol=1e-12)
-    np.testing.assert_allclose(pb.rbf_kernel_11(xi, xj, sf, l), g["k11"], rtol=1e-12)
+    np.testing.assert_allclose(pb.rbf_kernel(xi, xj, sf, l, d_i=0, d_j=1), g["k01"], rtol=1e-12)
+    np.testing.assert_allclose(pb.rbf_kernel(xi, xj, sf, l, d_i=1, d_j=1), g["k11"], rtol=1e-12)
 
 
 def test_basis_functions(gold):

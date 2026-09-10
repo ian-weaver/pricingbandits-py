@@ -21,14 +21,11 @@ from .kernels import (
     covariance_from_kernel,
     joint_cov_from_kernel,
     rbf_kernel,
-    rbf_kernel_01,
-    rbf_kernel_11,
-    rbf_kernel_all,
 )
 from .policies import gpts, gpts_mono, gpucb, gpucb_mono, noise_sample, ts, ucb
 from .truncated_mvn import rtmvnorm
 
-__version__ = "2.0.0"
+__version__ = "2.1.0"
 
 __all__ = [
     "pricing_bandit", "mab_experiment", "BanditResult", "POLICIES",
@@ -37,7 +34,7 @@ __all__ = [
     "basis_function", "basis_matrix",
     "nlml", "optimal_hyperparameters", "posterior_prediction",
     "make_pos_definite", "mvrnorm", "rtmvnorm",
-    "rbf_kernel", "rbf_kernel_01", "rbf_kernel_11", "rbf_kernel_all",
+    "rbf_kernel",
     "covariance_from_kernel", "joint_cov_from_kernel",
     "get_diagnostics", "reset_diagnostics",
 ]
