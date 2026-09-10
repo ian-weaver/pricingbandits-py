@@ -60,6 +60,32 @@ the monotonic variants' constraint grid and defaults to 11 regardless of the
 number of arms; `timeout` (default 5s) bounds each truncated-sampling attempt
 before the fallback chain advances.
 
+## Policy Comparison Example
+
+Running each policy with one seed on the same 1,000 consumers — willingness
+to pay drawn from a Beta(2, 9) distribution — gives the results below. To
+compare policies, score each price the bandit posted by its expected revenue
+under the true distribution, and track the cumulative total as a percentage
+of what always charging the optimal price would have earned:
+
+```python
+from scipy.stats import beta as beta_dist
+
+expected_revenue = prices * (1 - beta_dist.cdf(prices, 2, 9))
+grid = np.arange(1, 1_000_001) / 1_000_000
+optimal = np.max(grid * (1 - beta_dist.cdf(grid, 2, 9)))  # best any price could do
+earned = expected_revenue[np.searchsorted(prices, out.prices_tested)]
+pct_of_optimal = np.cumsum(earned) / (np.arange(1, len(earned) + 1) * optimal) * 100
+```
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/README-comparison-dark.png">
+  <img alt="Cumulative revenue as a percentage of the optimal price's revenue, for all six policies on the same 1,000 simulated consumers" src="assets/README-comparison.png">
+</picture>
+
+See [examples/quickstart.py](examples/quickstart.py) for the full runnable
+version, including the heterogeneous-noise variants.
+
 ## Fidelity to the R package
 
 - Deterministic components (kernels, basis functions, aggregation, likelihood,
